@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
-
     <title>Home</title>
 </head>
 <body class="p-3 mb-2 bg-light text-black">
@@ -50,7 +49,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="file : ${files}">
+                        <tr th:each="file:${files}">
                             <td>
                                 <a target="_blank" class="btn btn-success" th:href="@{files/__${file.getFileId()}__}">View</a>
                                 <a  class="btn btn-danger" th:href="@{files/delete/__${file.getFileId()}__}">Delete</a>
@@ -76,7 +75,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="note : ${notes}">
+                        <tr th:each="note:${notes}">
                             <td>
                                 <button id="edit-note-button" type="button" class="btn btn-success"
                                         th:data-parameter1="${note.getNoteId()}"
@@ -84,10 +83,10 @@
                                         th:data-parameter3="${note.getNoteDescription()}"
                                         th:onclick="|showNoteModal(this.getAttribute('data-parameter1'),
                                         this.getAttribute('data-parameter2'), this.getAttribute('data-parameter3')|">Edit</button>
-                                <a id="delete-note-button" class="btn btn-danger" th:href="@{/home/delete-note(noteId=${note.noteId})}">Delete</a>
+                                <a id="delete-note-button" class="btn btn-danger" th:href="@{delete/__${note.getNoteId()}__}">Delete</a>
                             </td>
-                            <th id="show-note-title" scope="row" th:text="${note.noteTitle}">Example Note Title</th>
-                            <td id="show-note-description" th:text="${note.noteDescription}">Example Note Description </td>
+                            <th id="show-note-title" scope="row" th:text="${note.getNoteTitle()}">Example Note Title</th>
+                            <td id="show-note-description" th:text="${note.getNoteDescription()}">Example Note Description </td>
                         </tr>
                         </tbody>
                     </table>
@@ -140,7 +139,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="credential : ${credentials}">
+                        <tr th:each="credential:${credentials}">
                             <td th:id="${credential.getCredentialId()}">
                                 <button id="edit-credential-button" type="button" class="btn btn-success" th:data-parameter1="${credential.getCredentialId()}"
                                         th:data-parameter2="${credential.getUrl()}"
@@ -220,6 +219,20 @@
         $('#credential-password').val(password ? password : '');
         $('#credentialModal').modal('show');
     }
+
+    function hideMessage() {
+        let x = document.getElementById("message");
+        x.style.visibility="hidden";
+    }
+</script>
+<script>
+    let tabToSelect = [[${tab}]]
+    $(function () {
+        $('#'+tabToSelect+'').tab('show')
+    })
+    $(function () {
+        setTimeout(hideMessage, 2000)
+    })
 </script>
 </body>
 </html>

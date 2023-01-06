@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class File {
-    private int fields;
+    private int fileId;
     private String filename;
     private String contentType;
     private String fileSize;
